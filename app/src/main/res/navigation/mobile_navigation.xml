@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.bacteria.bestfilm.presentation.main.ui.profile.ProfileFragment"
+        android:label="@string/st_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_poster"
+        android:name="com.bacteria.bestfilm.presentation.main.ui.poster.PosterFragment"
+        android:label="@string/st_poster"
+        tools:layout="@layout/fragment_poster" />
+
+    <fragment
+        android:id="@+id/navigation_complex"
+        android:name="com.bacteria.bestfilm.presentation.main.ui.complex.ComplexFragment"
+        android:label="@string/st_complex"
+        tools:layout="@layout/fragment_complex" />
+</navigation>

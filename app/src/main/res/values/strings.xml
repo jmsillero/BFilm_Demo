@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BFilm</string>
+    <string name="st_login">Iniciar sesión</string>
+    <string name="st_email">Correo</string>
+    <string name="st_password">Contraseña</string>
+    <string name="st_profile">Perfil</string>
+    <string name="st_poster">Cartelera</string>
+    <string name="st_complex">Complejo</string>
 </resources>

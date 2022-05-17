@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="LabelValueView">
+        <attr name="label" format="string" />
+        <attr name="android:orientation" />
+    </declare-styleable>
+</resources>

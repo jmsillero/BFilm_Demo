@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">BFilm</string>
     <string name="st_login">Iniciar sesión</string>
-    <string name="st_email">Correo</string>
+    <string name="st_email">Correo electrónico</string>
     <string name="st_password">Contraseña</string>
     <string name="st_profile">Perfil</string>
     <string name="st_poster">Cartelera</string>
     <string name="st_complex">Complejo</string>
+    <string name="st_name">Nombre</string>
+    <string name="st_clasification">Clasificación</string>
+    <string name="st_genre">Género</string>
+    <string name="st_duration">Duración</string>
+    <string name="st_synopsis">Sinopsis</string>
+    <string name="st_welcome">Bienvenido</string>
+    <string name="st_user_name">Nombre de usuario</string>
+    <string name="st_credit_card">Tarjeta</string>
 </resources>

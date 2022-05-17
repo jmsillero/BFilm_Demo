@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.navigation.Navigation
 import com.bacteria.bestfilm.R
 import com.bacteria.bestfilm.databinding.ActivityMainBinding
+import com.bacteria.bestfilm.presentation.detail.FilmDetailActivity
 import com.bacteria.bestfilm.presentation.main.CoverActivity
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint

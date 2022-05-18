@@ -14,4 +14,9 @@
     <string name="st_welcome">Bienvenido</string>
     <string name="st_user_name">Nombre de usuario</string>
     <string name="st_credit_card">Tarjeta</string>
+    <string name="st_loading">Cargando...</string>
+    <string name="st_error_title">Error</string>
+    <string name="st_login_error_message">Error iniciando sección</string>
+    <string name="st_accept">Aceptar</string>
+    <string name="st_error_occurred">Ha ocurrido un error</string>
 </resources>

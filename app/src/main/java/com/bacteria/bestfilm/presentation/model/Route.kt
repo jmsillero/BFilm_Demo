@@ -1,6 +1,12 @@
 package com.bacteria.bestfilm.presentation.model
 
-data class Route(
+import com.bacteria.bestfilm.domain.entity.RouteEntity
+
+  class Route(
     val code: String?,
     val sizes: Size?
 )
+
+fun RouteEntity.toRoute(): Route {
+    return Route(code, sizes?.toSize())
+}

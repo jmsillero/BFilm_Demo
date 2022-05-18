@@ -1,5 +1,6 @@
 package com.bacteria.bestfilm.presentation.model
 
+import com.bacteria.bestfilm.domain.entity.FilmEntity
 import java.util.*
 
 class Film(
@@ -12,19 +13,18 @@ class Film(
     val genre: String?,
     val synopsis: String?,
     val length: String?,
-    val release_date: Date?,
+    val releaseDate: Date?,
     val name: String?,
     val code: String?,
-    val original_name: String?,
-    val routes: List<Route>?
+    val originalName: String?,
+    )
 
-) {
-    fun getMediaByCode(code: String): String {
-        val resource = media?.find { m ->
-            m.code == code
-        }?.resource
-
-        val path = routes?.find { r -> r.code == code }?.sizes?.medium
-        return "$path$resource"
-    }
+fun FilmEntity.toFilm(): Film {
+    return Film(
+        id, rating, media?.map { it.toMedia() }, cinemas,
+        position, categories, genre, synopsis,
+        length, releaseDate, name, code, originalName
+    )
 }
+
+

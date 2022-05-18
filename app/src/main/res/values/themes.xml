@@ -14,14 +14,14 @@
         <!-- Customize your theme here. -->
     </style>
 
-<!--    <style name="Theme.BFilm.NoActionBar">-->
-<!--        <item name="windowActionBar">false</item>-->
-<!--        <item name="windowNoTitle">true</item>-->
-<!--    </style>-->
+    <style name="Theme.BFilm.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-<!--    <style name="Theme.BFilm.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+    <style name="Theme.BFilm.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-<!--    <style name="Theme.BFilm.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+    <style name="Theme.BFilm.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 <!--Full screen mode for login activity-->
     <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">

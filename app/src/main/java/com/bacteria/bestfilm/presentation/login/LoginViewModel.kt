@@ -39,8 +39,9 @@ class LoginViewModel @Inject constructor(
         _state.value = LoginViewModelState.Error(failure)
     }
 
-    val email: MutableLiveData<String> = savedStateHandle.getLiveData("email", "")
-    val password: MutableLiveData<String> = savedStateHandle.getLiveData("password", "")
+    val email: MutableLiveData<String> = savedStateHandle.getLiveData("email", "pruebas_beto_ia@yahoo.com")
+    val password: MutableLiveData<String> = savedStateHandle.getLiveData("password", "Pruebas01")
+
 
     fun performLogin() {
         viewModelScope.launch(Dispatchers.IO) {

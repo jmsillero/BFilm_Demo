@@ -1,6 +1,6 @@
 package com.bacteria.bestfilm.presentation.detail
 
-import android.media.MediaPlayer
+
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -19,6 +19,9 @@ import com.bacteria.bestfilm.presentation.main.ui.poster.adapter.FilmsGridAdapte
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.videolan.libvlc.LibVLC
+import org.videolan.libvlc.Media
+import org.videolan.libvlc.MediaPlayer
 
 @AndroidEntryPoint
 class FilmDetailFragment : Fragment() {
@@ -30,6 +33,9 @@ class FilmDetailFragment : Fragment() {
 
     private val viewModel: FilmDetailViewModel by viewModels<FilmDetailViewModel>()
 
+    private var mLibVLC: LibVLC? = null
+    private var mMediaPlayer: MediaPlayer? = null
+
     companion object {
         val EXTRA_ID = "EXTRA_ID"
         fun newInstance(id: Long): FilmDetailFragment {
@@ -40,6 +46,8 @@ class FilmDetailFragment : Fragment() {
             return fragment
         }
 
+        private const val USE_TEXTURE_VIEW = false
+        private const val ENABLE_SUBTITLES = true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,36 +63,56 @@ class FilmDetailFragment : Fragment() {
     ): View {
         _binding = FragmentFilmDetailBinding.inflate(inflater, container, false)
 
-        setupUi()
+
         setupViewModel()
+
         return binding.root
     }
 
-    private fun setupUi() {
-        val mediaController = MediaController(context)
-        mediaController.setAnchorView(binding.vvPreview)
-        mediaController.setMediaPlayer(binding.vvPreview)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initPlayerView()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
-        binding.vvPreview.setMediaController(mediaController)
-        binding.vvPreview.setOnPreparedListener {
-            MediaPlayer.OnPreparedListener {
-                binding.vvPreview.seekTo(1)
-                binding.vvPreview.start()
-            }
-        }
 
+    private fun initPlayerView() {
+
+        mLibVLC = LibVLC(requireActivity(), ArrayList<String>().apply {
+            add("--no-drop-late-frames")
+            add("--no-skip-frames")
+            add("--vout=android-display");
+            add("--rtsp-tcp")
+            add("-vvv")
+        })
+        mMediaPlayer = MediaPlayer(mLibVLC)
+        val vout = mMediaPlayer?.vlcVout
+        vout?.setWindowSize(binding.vvPreview.width, binding.vvPreview.height)
+        mMediaPlayer?.attachViews(binding.vvPreview, null, ENABLE_SUBTITLES, USE_TEXTURE_VIEW)
 
     }
+
 
     private fun setupViewModel() {
         lifecycleScope.launch {
             viewModel.state.collect {
                 when (it) {
                     is DetailViewModelState.Success -> {
-                        val video = it.result.media?.find { it.code == "trailer_mp4" }
-                        binding.vvPreview.setVideoURI(Uri.parse("${it.route.sizes!!.medium}$video"))
-                        binding.vvPreview.requestFocus()
+                        val video = it.result.media?.find { it.code == "trailer_mp4" }?.resource
+                        try {
+                            Media(mLibVLC, Uri.parse("${it.route.sizes!!.medium}$video")).apply {
+                                setHWDecoderEnabled(true, false);
+                                addOption(":network-caching=150");
+                                addOption(":clock-jitter=0");
+                                addOption(":clock-synchro=0");
 
+                                mMediaPlayer?.media = this
+                                this.setHWDecoderEnabled(true, true)
+
+                            }.release()
+
+                            mMediaPlayer?.play()
+                        } catch (e: Exception) {
+                        }
                         binding.lvName.value = it.result.name
                         binding.lvClasification.value = it.result.categories?.get(0)
                         binding.lvGenre.value = it.result.genre
@@ -102,6 +130,19 @@ class FilmDetailFragment : Fragment() {
 
             }
         }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        mMediaPlayer?.stop()
+        mMediaPlayer?.detachViews()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mMediaPlayer?.release()
+        mLibVLC?.release()
     }
 
 

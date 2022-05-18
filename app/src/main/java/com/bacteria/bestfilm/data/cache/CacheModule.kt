@@ -7,6 +7,8 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.bacteria.bestfilm.data.cache.datasource.LocalFilmsDatasource
 import com.bacteria.bestfilm.data.cache.datasource.impl.LocalFilmDatastoreImpl
+import com.bacteria.bestfilm.data.cache.preferences.EncryptedPreferences
+import com.bacteria.bestfilm.data.cache.preferences.impl.EncryptedPreferencesImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,13 +41,19 @@ class CacheModule {
     @Provides
     fun provideItemRoomDatabase(@ApplicationContext context: Context): FilmsDatabase {
         return Room.databaseBuilder(context, FilmsDatabase::class.java, "films_database")
-             .build()
+            .build()
     }
 
     @Singleton
     @Provides
     fun provideLocalCache(database: FilmsDatabase): LocalFilmsDatasource {
         return LocalFilmDatastoreImpl(database)
+    }
+
+    @Singleton
+    @Provides
+    fun provideEncryptedPreferences(sharedPreferences: SharedPreferences): EncryptedPreferences {
+        return EncryptedPreferencesImpl(sharedPreferences)
     }
 
 }

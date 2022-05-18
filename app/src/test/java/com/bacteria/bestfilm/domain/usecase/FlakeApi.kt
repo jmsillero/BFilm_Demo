@@ -1,22 +1,18 @@
 package com.bacteria.bestfilm.domain.usecase
 
-import android.content.SharedPreferences
-import com.bacteria.bestfilm.data.cache.CacheModule
-import com.bacteria.bestfilm.data.cache.EncryptedPreferences
 import com.bacteria.bestfilm.data.cache.datasource.LocalFilmsDatasource
 import com.bacteria.bestfilm.data.cache.local.FilmListLocal
 import com.bacteria.bestfilm.data.cache.local.FilmLocal
 import com.bacteria.bestfilm.data.cache.local.RouteLocal
 import com.bacteria.bestfilm.data.cache.local.toLocal
+import com.bacteria.bestfilm.data.cache.preferences.EncryptedPreferences
 import com.bacteria.bestfilm.data.remote.datasource.RemoteFilmDatasource
 import com.bacteria.bestfilm.data.remote.datasource.RemoteUserDatasource
-import com.bacteria.bestfilm.data.remote.datasource.impl.RemoteUserDatastoreImpl
 import com.bacteria.bestfilm.data.remote.dto.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
-import java.time.LocalDate
 import java.util.*
 
 val items = mutableListOf<FilmDto>()
@@ -108,6 +104,19 @@ class FakeRemoteUserDataSource(
             emit(fakeUserDto)
         }
     }
+}
+
+class FakeEncryptedPreferences(
+    private val delay: Long = 0
+) : EncryptedPreferences {
+    override fun saveToken(token: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getToken(): String {
+        return "Beared token"
+    }
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.bacteria.bestfilm.domain.repository.impl
 
-import com.bacteria.bestfilm.data.cache.EncryptedPreferences
+import com.bacteria.bestfilm.data.cache.preferences.EncryptedPreferences
+import com.bacteria.bestfilm.data.cache.preferences.impl.EncryptedPreferencesImpl
 import com.bacteria.bestfilm.data.remote.datasource.RemoteUserDatasource
 import com.bacteria.bestfilm.data.remote.dto.toDto
 import com.bacteria.bestfilm.domain.entity.LoginEntity

@@ -1,6 +1,6 @@
 package com.bacteria.bestfilm.domain
 
-import com.bacteria.bestfilm.data.cache.EncryptedPreferences
+import com.bacteria.bestfilm.data.cache.preferences.impl.EncryptedPreferencesImpl
 import com.bacteria.bestfilm.data.cache.datasource.LocalFilmsDatasource
 import com.bacteria.bestfilm.data.remote.datasource.RemoteFilmDatasource
 import com.bacteria.bestfilm.data.remote.datasource.RemoteUserDatasource
@@ -22,7 +22,7 @@ class DomainModule {
     @Singleton
     fun userRepositoryProvider(
         remoteUserDatasource: RemoteUserDatasource,
-        encryptedPreferences: EncryptedPreferences
+        encryptedPreferences: EncryptedPreferencesImpl
     ): UserRepository {
         return UserRepositoryImpl(remoteUserDatasource, encryptedPreferences)
     }

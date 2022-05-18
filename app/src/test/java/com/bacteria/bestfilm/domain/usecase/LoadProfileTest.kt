@@ -1,7 +1,6 @@
 package com.bacteria.bestfilm.domain.usecase
 
 import com.bacteria.bestfilm.CoroutinesTestRule
-import com.bacteria.bestfilm.domain.repository.impl.FilmRepositoryImpl
 import com.bacteria.bestfilm.domain.repository.impl.UserRepositoryImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -10,7 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class LoadProfile {
+class LoadProfileTest {
 
     @get:Rule
     val coroutineTestRule = CoroutinesTestRule()
@@ -23,7 +22,18 @@ class LoadProfile {
     @Test
     fun `fetch profile`() =
         coroutineTestRule.testDispatcher.runBlockingTest {
-            //TODO: Implement the test
-        }
+            val repository =
+                UserRepositoryImpl(
+                    FakeRemoteUserDataSource(),
+                    FakeEncryptedPreferences()
+                )
 
+            val loadProfile = LoadProfile(repository)
+
+            loadProfile.invoke("MX").collect {
+                // compare only the first element
+                Assert.assertEquals(fakeUser.toEntity(), it)
+            }
+
+        }
 }

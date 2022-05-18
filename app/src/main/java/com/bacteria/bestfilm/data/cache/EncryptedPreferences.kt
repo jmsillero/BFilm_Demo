@@ -6,12 +6,13 @@ import androidx.security.crypto.MasterKeys
 import javax.inject.Inject
 
 
-class EncryptedPreferences @Inject constructor(private val sharedPreferences: SharedPreferences) {
+open class EncryptedPreferences @Inject constructor(private val sharedPreferences: SharedPreferences) {
 
     var editor = sharedPreferences.edit()
 
     fun saveToken(token: String) {
         editor.putString("token", token)
+        editor.commit()
     }
 
     fun getToken(): String? {

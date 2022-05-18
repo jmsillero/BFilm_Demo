@@ -94,6 +94,7 @@ class LoginActivity : BaseActivity() {
     private fun openMainScreen() {
         val coverActivityIntent = Intent(this, CoverActivity::class.java)
         startActivity(coverActivityIntent)
+        finish()
     }
 
 

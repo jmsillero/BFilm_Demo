@@ -1,11 +1,16 @@
 package com.bacteria.bestfilm.domain.usecase
 
+import android.content.SharedPreferences
+import com.bacteria.bestfilm.data.cache.CacheModule
+import com.bacteria.bestfilm.data.cache.EncryptedPreferences
 import com.bacteria.bestfilm.data.cache.datasource.LocalFilmsDatasource
 import com.bacteria.bestfilm.data.cache.local.FilmListLocal
 import com.bacteria.bestfilm.data.cache.local.FilmLocal
 import com.bacteria.bestfilm.data.cache.local.RouteLocal
 import com.bacteria.bestfilm.data.cache.local.toLocal
 import com.bacteria.bestfilm.data.remote.datasource.RemoteFilmDatasource
+import com.bacteria.bestfilm.data.remote.datasource.RemoteUserDatasource
+import com.bacteria.bestfilm.data.remote.datasource.impl.RemoteUserDatastoreImpl
 import com.bacteria.bestfilm.data.remote.dto.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -85,3 +90,24 @@ class FakeFilmLocalDataSource(
         TODO("Not yet implemented")
     }
 }
+
+val fakeUser = UserDto("test", "test", "test", "test", "test", "test")
+
+
+class FakeRemoteUserDataSource(
+    private val fakeUserDto: UserDto = fakeUser,
+    private val delay: Long = 0
+) : RemoteUserDatasource {
+    override suspend fun login(loginData: LoginDto): Flow<LoginResponseDto> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getProfile(token: String, countryCode: String): Flow<UserDto> {
+        delay(delay)
+        return flow {
+            emit(fakeUserDto)
+        }
+    }
+}
+
+

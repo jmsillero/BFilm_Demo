@@ -1,11 +1,11 @@
 package com.bacteria.bestfilm.domain.repository.impl
 
-import android.content.SharedPreferences
 import com.bacteria.bestfilm.data.cache.EncryptedPreferences
 import com.bacteria.bestfilm.data.remote.datasource.RemoteUserDatasource
 import com.bacteria.bestfilm.data.remote.dto.toDto
 import com.bacteria.bestfilm.domain.entity.LoginEntity
 import com.bacteria.bestfilm.domain.entity.UserAuthEntity
+import com.bacteria.bestfilm.domain.entity.UserEntity
 import com.bacteria.bestfilm.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -23,6 +23,16 @@ class UserRepositoryImpl @Inject constructor(
             resp.toEntity()
         }.onEach {
             encryptedPreferences.saveToken("${it.tokenType} ${it.accessToken}")
+        }
+    }
+
+    override suspend fun getProfile(countryCode: String): Flow<UserEntity> {
+        val token = encryptedPreferences.getToken()
+        val response = remoteUserDatasource.getProfile(token!!, countryCode)
+        return response.map { resp ->
+            resp.toEntity()
+        }.onEach {
+            //TODO: save token
         }
     }
 }

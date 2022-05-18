@@ -1,9 +1,6 @@
 package com.bacteria.bestfilm.data.remote
 
-import com.bacteria.bestfilm.data.remote.dto.FilmDto
-import com.bacteria.bestfilm.data.remote.dto.FilmListDto
-import com.bacteria.bestfilm.data.remote.dto.LoginDto
-import com.bacteria.bestfilm.data.remote.dto.LoginResponseDto
+import com.bacteria.bestfilm.data.remote.dto.*
 import com.bacteria.bestfilm.presentation.model.Film
 import retrofit2.Response
 import retrofit2.http.*
@@ -20,4 +17,10 @@ interface RemoteService {
         @Query("country_code") countryCode: String,
         @Query("cinema") cinema: String
     ): Response<FilmListDto>
+
+    @GET("members/profile")
+    suspend fun getProfile(
+        @Header("Authorization") token: String?,
+        @Query("country_code") countryCode: String
+    ): Response<UserDto>
 }

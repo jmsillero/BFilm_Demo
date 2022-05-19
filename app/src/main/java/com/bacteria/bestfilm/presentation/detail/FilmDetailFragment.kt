@@ -62,15 +62,12 @@ class FilmDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilmDetailBinding.inflate(inflater, container, false)
-
-
-        setupViewModel()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initPlayerView()
+        setupViewModel()
         super.onViewCreated(view, savedInstanceState)
     }
 
